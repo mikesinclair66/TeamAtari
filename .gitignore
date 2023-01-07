@@ -37,3 +37,10 @@ QDS.sln
 QDS.vcxproj
 QDS.vcxproj.filters
 QDS.vcxproj.user
+Debug/
+
+#A local instance
+Practice.sln
+Practice.vcxproj
+Practice.vcxproj.filters
+Practice.vcxproj.user
