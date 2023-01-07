@@ -2,12 +2,16 @@
 
 using namespace coordinates;
 
+void Component::updateColor() {
+	rect.setFillColor(color);
+}
+
 void Component::draw(RenderWindow& window) {
 	window.draw(rect);
 }
 
 void Component::setColor(Color color) {
-	rect.setFillColor(color);
+	this->color = color;
 }
 
 void Component::setSize(float width, float height) {

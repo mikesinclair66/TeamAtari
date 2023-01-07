@@ -9,11 +9,14 @@ using namespace sf;
 
 namespace coordinates {
 	class Component : public Boundary {
+	protected:
 		RectangleShape rect;
+		Color color;
 
 	public:
-		void draw(RenderWindow&);
-		void setColor(Color);
+		virtual void updateColor();
+		virtual void draw(RenderWindow&);
+		virtual void setColor(Color);
 		void setSize(float, float) override;
 		void setPosition(float, float) override;
 		Vector2f getSize() override;
