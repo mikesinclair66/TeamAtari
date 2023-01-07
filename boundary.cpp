@@ -4,9 +4,9 @@ using namespace coordinates;
 
 void Boundary::draw() {}
 
-void Boundary::setSize(Vector2f size) {}
+void Boundary::setSize(float width, float height) {}
 
-void Boundary::setPosition(Vector2f pos) {}
+void Boundary::setPosition(float x, float y) {}
 
 Vector2f Boundary::getSize() {
 	return Vector2f(-1, -1);

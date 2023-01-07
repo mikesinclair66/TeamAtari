@@ -14,8 +14,8 @@ namespace coordinates {
 	public:
 		void draw(RenderWindow&);
 		void setColor(Color);
-		void setSize(Vector2f) override;
-		void setPosition(Vector2f) override;
+		void setSize(float, float) override;
+		void setPosition(float, float) override;
 		Vector2f getSize() override;
 		Vector2f getPosition() override;
 	};

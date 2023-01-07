@@ -13,7 +13,7 @@ namespace coordinates {
 		bool hovered = false;
 
 	public:
-		void listen(Vector2i) override;
+		void listen(float, float) override;
 		bool isHovered();
 	};
 }

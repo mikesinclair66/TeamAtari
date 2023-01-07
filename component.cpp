@@ -10,12 +10,12 @@ void Component::setColor(Color color) {
 	rect.setFillColor(color);
 }
 
-void Component::setSize(Vector2f size) {
-	rect.setSize(size);
+void Component::setSize(float width, float height) {
+	rect.setSize(Vector2f(width, height));
 }
 
-void Component::setPosition(Vector2f pos) {
-	rect.setPosition(pos);
+void Component::setPosition(float x, float y) {
+	rect.setPosition(Vector2f(x, y));
 }
 
 Vector2f Component::getSize() {

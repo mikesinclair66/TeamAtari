@@ -2,4 +2,4 @@
 
 using namespace coordinates;
 
-void MouseListener::listen(Vector2i pos) {}
+void MouseListener::listen(float, float) {}

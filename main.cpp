@@ -10,11 +10,12 @@ int main()
     ComponentWindow w(800, 600, "QDS");
 
     Button* btn = new Button();
-    btn->setSize(Vector2f(150, 75));
-    btn->setPosition(Vector2f(25, 25));
+    btn->setSize(150, 75);
+    btn->setPosition(25, 25);
     btn->setColor(Color::Red);
 
-    w.add(btn);
+    w.addComponent(btn);
+    w.addMouseListener(btn);
     w.draw();
 
     return 0;

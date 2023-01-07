@@ -6,31 +6,21 @@ ComponentWindow::ComponentWindow(int width, int height, string label) {
 	window = new RenderWindow(VideoMode(width, height), label.c_str());
 }
 
-void ComponentWindow::add(Component* component) {
+void ComponentWindow::addComponent(Component* component) {
 	components.push_back(component);
+}
+
+void ComponentWindow::addMouseListener(MouseListener* mouseListener) {
+	mouseListeners.push_back(mouseListener);
 }
 
 void ComponentWindow::draw() {
 	Boundary::draw();
 
 	while (window->isOpen()) {
-		sf::Event event;
+		Event event;
 		while (window->pollEvent(event))
-		{
-			switch (event.type) {
-			case Event::Closed:
-				window->close();
-				break;
-			case Event::Resized:
-				View view = window->getDefaultView();
-				view.setSize({
-					static_cast<float>(event.size.width),
-					static_cast<float>(event.size.height)
-					});
-				window->setView(view);
-				break;
-			}
-		}
+			pollEvent(event);
 
 		window->clear();
 		for (Component* component : components)
@@ -39,14 +29,35 @@ void ComponentWindow::draw() {
 	}
 }
 
-void ComponentWindow::setSize(Vector2f size) {
-	Boundary::setSize(size);
-	window->setSize(Vector2u(size.x, size.y));
+void ComponentWindow::pollEvent(Event e) {
+	View view;
+	switch (e.type) {
+	case Event::Closed:
+		window->close();
+		break;
+	case Event::Resized:
+		view = window->getDefaultView();
+		view.setSize({
+			static_cast<float>(e.size.width),
+			static_cast<float>(e.size.height)
+			});
+		window->setView(view);
+		break;
+	case Event::MouseMoved:
+		for (MouseListener* ml : mouseListeners)
+			ml->listen(e.mouseMove.x, e.mouseMove.y);
+		break;
+	}
 }
 
-void ComponentWindow::setPosition(Vector2f pos) {
-	Boundary::setPosition(pos);
-	window->setPosition(Vector2i(pos.x, pos.y));
+void ComponentWindow::setSize(float width, float height) {
+	Boundary::setSize(width, height);
+	window->setSize(Vector2u(width, height));
+}
+
+void ComponentWindow::setPosition(float x, float y) {
+	Boundary::setPosition(x, y);
+	window->setPosition(Vector2i(x, y));
 }
 
 Vector2f ComponentWindow::getSize() {

@@ -9,7 +9,7 @@ using namespace sf;
 namespace coordinates {
 	class MouseListener {
 	public:
-		virtual void listen(Vector2i);
+		virtual void listen(float, float);
 	};
 }
 

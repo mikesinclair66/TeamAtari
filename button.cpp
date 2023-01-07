@@ -2,11 +2,10 @@
 
 using namespace coordinates;
 
-void Button::listen(Vector2i pos) {
+void Button::listen(float x, float y) {
 	Vector2f tsize = getSize(), tpos = getPosition();
-	hovered = pos.x >= tpos.x && pos.x < tpos.x + tsize.x
-		&& pos.y >= tpos.y && pos.y < tpos.y + tsize.y;
-	cout << "button hovered." << endl;
+	hovered = x >= tpos.x && x < tpos.x + tsize.x
+		&& y >= tpos.y && y < tpos.y + tsize.y;
 }
 
 bool Button::isHovered() {
