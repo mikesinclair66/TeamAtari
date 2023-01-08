@@ -47,6 +47,13 @@ void ComponentWindow::pollEvent(Event e) {
 		for (MouseListener* ml : mouseListeners)
 			ml->listen(e.mouseMove.x, e.mouseMove.y);
 		break;
+	case Event::MouseButtonPressed:
+		for (MouseListener* ml : mouseListeners)
+			ml->requestClick();
+		break;
+	case Event::MouseButtonReleased:
+		for (MouseListener* ml : mouseListeners)
+			ml->requestRelease();
 	}
 }
 

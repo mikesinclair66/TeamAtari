@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "component_window.hpp"
-#include "button.hpp"
+#include "scrollbar.hpp"
 
 using namespace coordinates;
 using namespace interact;
@@ -9,15 +9,17 @@ int main()
 {
     ComponentWindow w(800, 600, "QDS");
 
-    Button* btn = new Button();
-    btn->setColor(Color::Red);
-    btn->setAlternateColor(Color::Yellow);
-    btn->updateColor();
-    btn->setSize(150, 75);
-    btn->setPosition(25, 25);
+    ScrollbarVertical* s = new ScrollbarVertical();
+    s->setRatio(0.3f);
+    s->setOffsetRatio(0.5f);
+    s->setColor(Color::White);
+    s->setScrollColors(Color(127, 127, 127), Color(25, 25, 25));
+    s->updateColor();
+    s->setSize(50, 225);
+    s->setPosition(100, 100);
 
-    w.addComponent(btn);
-    w.addMouseListener(btn);
+    w.addComponent(s);
+    w.addMouseListener(s);
     w.draw();
 
     return 0;

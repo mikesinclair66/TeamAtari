@@ -22,6 +22,10 @@ void Component::setPosition(float x, float y) {
 	rect.setPosition(Vector2f(x, y));
 }
 
+Color Component::getColor() {
+	return color;
+}
+
 Vector2f Component::getSize() {
 	return rect.getSize();
 }

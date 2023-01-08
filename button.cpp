@@ -40,7 +40,3 @@ void Button::listen(float x, float y) {
 		this->hovered = hovered;
 	}
 }
-
-bool Button::isHovered() {
-	return hovered;
-}

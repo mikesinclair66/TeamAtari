@@ -19,6 +19,7 @@ namespace coordinates {
 		virtual void setColor(Color);
 		void setSize(float, float) override;
 		void setPosition(float, float) override;
+		Color getColor();
 		Vector2f getSize() override;
 		Vector2f getPosition() override;
 	};

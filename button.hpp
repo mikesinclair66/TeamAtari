@@ -4,25 +4,26 @@
 
 #include "component.hpp"
 #include "mouse_listener.hpp"
+#include "alternate_color.hpp"
 #include "hidden_component.hpp"
 #include <iostream>
 
 using namespace std;
+using namespace coordinates;
 
 namespace interact {
-	class Button : public Component, public MouseListener {
+	class Button : public Component, public MouseListener,
+		public AlternateColorProvider {
 		HiddenComponent* hiddenComponent;
-		bool hovered = false;
 
 	public:
 		Button();
 		void updateColor() override;
 		void draw(RenderWindow&) override;
-		void setAlternateColor(Color);
+		void setAlternateColor(Color) override;
 		void setSize(float, float) override;
 		void setPosition(float, float) override;
 		void listen(float, float) override;
-		bool isHovered();
 	};
 }
 
