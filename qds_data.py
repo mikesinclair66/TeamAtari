@@ -1,3 +1,7 @@
+#Jan 8th 2023
+# Made by : Elizabeh Ehebald
+
+
 import pandas as pd 
 import json
 import csv
@@ -44,7 +48,7 @@ def map_UTM(data_set):
 
 
 	sb.scatterplot(data = data_set, x = 'lognitude', y = 'latitude')
-	grid = sb.FacetGrid(data_set, col = "SHOVEL_ID", hue = "SHOVEL_ID", col_wrap=8)
+	grid = sb.FacetGrid(data_set, col = "SHOVEL_ID", hue = "SHOVEL_ID", col_wrap=3)
 	grid.map(sb.scatterplot, "lognitude", "latitude")
 
 	grid.add_legend()
@@ -93,7 +97,7 @@ def shortest_map(data_set, dump):
 	plt.scatter(data_set['lognitude'],data_set['latitude'])
 	plt.plot(data_set['lognitude'],data_set['latitude'])
 
-	plt.savefig("log_lag_dump.png")
+	plt.savefig("3.png")
 
 	plt.show()
 
@@ -172,11 +176,11 @@ def main():
 	x = pd.read_csv('mining.csv',sep = ',')
 	data_set = x.dropna()
 	data_set['TIMESTAMP'] = pd.to_datetime(data_set['TIMESTAMP'])
-	#map_UTM(data_set)
+	map_UTM(data_set)
 	#calculate_average_gas_shovel_ID(data_set)
 	#predict_fuel(data_set)
 	user_truck = 37
-	user_shovel = 5
+	user_shovel = 3
 	#print(data_set.head())
 
 	message = least_gas_mileage(data_set, user_truck,user_shovel)
