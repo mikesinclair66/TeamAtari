@@ -17,10 +17,12 @@ using namespace keys;
 
 namespace coordinates {
 	class ComponentWindow : public Boundary {
-		RenderWindow* window;
 		vector<Boundary*> boundaries;
 		vector<MouseListener*> mouseListeners;
 		vector<KeyListener*> keyListeners;
+
+	protected:
+		RenderWindow* window;
 
 	public:
 		ComponentWindow(int, int, string);
@@ -28,6 +30,7 @@ namespace coordinates {
 		void addMouseListener(MouseListener*);
 		void addKeyListener(KeyListener*);
 		void draw() override;
+		virtual void drawElements();
 		virtual void pollEvent(Event);
 		void setSize(float, float) override;
 		void setPosition(float, float) override;

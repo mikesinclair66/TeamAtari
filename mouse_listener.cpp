@@ -14,3 +14,7 @@ void MouseListener::requestRelease() {}
 bool MouseListener::isHovered() {
 	return hovered;
 }
+
+bool MouseListener::isToggled() {
+	return toggled;
+}

@@ -16,6 +16,7 @@ namespace coordinates {
 		virtual bool requestClick();
 		virtual void requestRelease();
 		bool isHovered();
+		bool isToggled();
 	};
 }
 

@@ -3,7 +3,8 @@
 using namespace coordinates;
 
 ComponentWindow::ComponentWindow(int width, int height, string label) {
-	window = new RenderWindow(VideoMode(width, height), label.c_str());
+	window = new RenderWindow(VideoMode(width, height),
+		label.c_str(), Style::None);
 }
 
 void ComponentWindow::addBoundary(Boundary* boundary) {
@@ -27,10 +28,14 @@ void ComponentWindow::draw() {
 			pollEvent(event);
 
 		window->clear();
-		for (Boundary* boundary : boundaries)
-			boundary->draw(*window);
+		drawElements();
 		window->display();
 	}
+}
+
+void ComponentWindow::drawElements() {
+	for (Boundary* boundary : boundaries)
+		boundary->draw(*window);
 }
 
 void ComponentWindow::pollEvent(Event e) {

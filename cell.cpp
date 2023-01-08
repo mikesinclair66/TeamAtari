@@ -8,14 +8,16 @@ Cell::Cell() {
 }
 
 void Cell::type(char key) {
-	string preString = textBox->getString();
-	switch (key) {
-	case '\r':
-		textBox->setString(preString.substr(0, preString.length() - 1));
-		break;
-	default:
-		textBox->setString(preString + key);
-		break;
+	if (toggled) {
+		string preString = textBox->getString();
+		switch (key) {
+		case '\r':
+			textBox->setString(preString.substr(0, preString.length() - 1));
+			break;
+		default:
+			textBox->setString(preString + key);
+			break;
+		}
 	}
 }
 
@@ -52,7 +54,7 @@ void Cell::draw(RenderWindow& window) {
 		if (tiTimer.getRatio() < 0.5f) {
 			FloatRect bounds = textBox->getLocalBounds();
 			textIndicator.setPosition(Vector2f(getPosition().x + getSize().x / 2
-				+ bounds.width / 2 + 3, getPosition().y + 3));
+				+ bounds.width / 2 + 3, getPosition().y + 11));
 			window.draw(textIndicator);
 		}
 		else if (tiTimer.getRatio() >= 1.f)
@@ -63,12 +65,12 @@ void Cell::draw(RenderWindow& window) {
 void Cell::setSize(float width, float height) {
 	Component::setSize(width, height);
 	textBox->setSize(width, height);
-	textIndicator.setSize(Vector2f(4, height - 6));
+	textIndicator.setSize(Vector2f(4, height - 22));
 }
 
 void Cell::setPosition(float x, float y) {
 	Component::setPosition(x, y);
-	textBox->setPosition(x + getSize().x / 2, y + getSize().y / 2 + 6);
+	textBox->setPosition(x + getSize().x / 2, y + getSize().y / 2);
 }
 
 void Cell::setTextIndicatorColor(Color tiColor) {

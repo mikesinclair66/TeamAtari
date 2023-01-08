@@ -2,26 +2,24 @@
 #ifndef GRADIENT_HPP
 #define GRADIENT_HPP
 
-#include "sprite_drawer.hpp"
-#include <SFML/Graphics.hpp>
+#include "boundary.hpp"
 #include "alternate_color.hpp"
-#include <iostream>
+#include <SFML/Graphics.hpp>
 
-using namespace coordinates;
 using namespace sf;
-using namespace std;
 
 namespace coordinates {
-	class Gradient : public SpriteDrawer, public AlternateColorProvider {
-		Image image;
+	class Gradient : public Boundary, public AlternateColorProvider {
 		Color color, alternateColor;
+		Vector2f size;
+		Vertex rectangle[4];
 
 	public:
-		Gradient();
 		void setColor(Color);
 		void setAlternateColor(Color) override;
-		void setSize(float, float);
-		void setPosition(float, float);
+		void draw(RenderWindow&) override;
+		void setSize(float, float) override;
+		void setPosition(float, float) override;
 	};
 }
 

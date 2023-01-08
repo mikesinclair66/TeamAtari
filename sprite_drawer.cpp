@@ -2,9 +2,9 @@
 
 using namespace coordinates;
 
-SpriteDrawer::SpriteDrawer(string* path) {
-	if (path != nullptr) {
-		if (!texture.loadFromFile(*path)) {}
+SpriteDrawer::SpriteDrawer(string path) {
+	if (path != "") {
+		if (!texture.loadFromFile(path)) {}
 		sprite.setTexture(texture);
 	}
 }

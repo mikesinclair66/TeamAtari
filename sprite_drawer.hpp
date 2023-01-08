@@ -16,7 +16,7 @@ namespace coordinates {
 		Sprite sprite;
 
 	public:
-		SpriteDrawer(string*);
+		SpriteDrawer(string);
 		void draw(RenderWindow&) override;
 		void setPosition(float, float) override;
 	};
