@@ -1,3 +1,5 @@
+# Uses data_group0.csv data subset. Focus is on Shovel_ID #1
+
 import pandas as pd
 
 
