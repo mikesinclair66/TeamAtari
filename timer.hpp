@@ -16,12 +16,12 @@ namespace util {
 		Clock clock;
 
 	protected:
-		void clear();
 		void flipRatio();
-		float getRatio(bool = false);
 
 	public:
+		void clear();
 		void setGoalTime(float);
+		float getRatio(bool = false);
 	};
 }
 

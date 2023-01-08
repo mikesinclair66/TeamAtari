@@ -8,20 +8,25 @@
 #include "mouse_listener.hpp"
 #include <string>
 #include <vector>
+#include "key_register.hpp"
+#include "key_listener.hpp"
 
 using namespace std;
 using namespace sf;
+using namespace keys;
 
 namespace coordinates {
 	class ComponentWindow : public Boundary {
 		RenderWindow* window;
-		vector<Component*> components;
+		vector<Boundary*> boundaries;
 		vector<MouseListener*> mouseListeners;
+		vector<KeyListener*> keyListeners;
 
 	public:
 		ComponentWindow(int, int, string);
-		void addComponent(Component*);
+		void addBoundary(Boundary*);
 		void addMouseListener(MouseListener*);
+		void addKeyListener(KeyListener*);
 		void draw() override;
 		virtual void pollEvent(Event);
 		void setSize(float, float) override;

@@ -2,13 +2,13 @@
 
 using namespace util;
 
-void Timer::setGoalTime(float goalTime) {
-	this->goalTime = goalTime;
-}
-
 void Timer::clear() {
 	clock.restart();
 	flipped = false;
+}
+
+void Timer::setGoalTime(float goalTime) {
+	this->goalTime = goalTime;
 }
 
 void Timer::flipRatio() {

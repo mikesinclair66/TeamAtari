@@ -4,6 +4,8 @@ using namespace coordinates;
 
 void Boundary::draw() {}
 
+void Boundary::draw(RenderWindow& window) {}
+
 void Boundary::setSize(float width, float height) {}
 
 void Boundary::setPosition(float x, float y) {}

@@ -10,6 +10,7 @@ namespace coordinates {
 	class Boundary {
 	public:
 		virtual void draw();
+		virtual void draw(RenderWindow&);
 		virtual void setSize(float, float);
 		virtual void setPosition(float, float);
 		virtual Vector2f getSize();

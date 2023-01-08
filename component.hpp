@@ -15,7 +15,7 @@ namespace coordinates {
 
 	public:
 		virtual void updateColor();
-		virtual void draw(RenderWindow&);
+		virtual void draw(RenderWindow&) override;
 		virtual void setColor(Color);
 		void setSize(float, float) override;
 		void setPosition(float, float) override;

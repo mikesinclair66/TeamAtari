@@ -6,12 +6,16 @@ ComponentWindow::ComponentWindow(int width, int height, string label) {
 	window = new RenderWindow(VideoMode(width, height), label.c_str());
 }
 
-void ComponentWindow::addComponent(Component* component) {
-	components.push_back(component);
+void ComponentWindow::addBoundary(Boundary* boundary) {
+	boundaries.push_back(boundary);
 }
 
 void ComponentWindow::addMouseListener(MouseListener* mouseListener) {
 	mouseListeners.push_back(mouseListener);
+}
+
+void ComponentWindow::addKeyListener(KeyListener* keyListener) {
+	keyListeners.push_back(keyListener);
 }
 
 void ComponentWindow::draw() {
@@ -23,8 +27,8 @@ void ComponentWindow::draw() {
 			pollEvent(event);
 
 		window->clear();
-		for (Component* component : components)
-			component->draw(*window);
+		for (Boundary* boundary : boundaries)
+			boundary->draw(*window);
 		window->display();
 	}
 }
@@ -54,6 +58,13 @@ void ComponentWindow::pollEvent(Event e) {
 	case Event::MouseButtonReleased:
 		for (MouseListener* ml : mouseListeners)
 			ml->requestRelease();
+	case Event::KeyPressed:
+		KeyRegister::type(e);
+		if (KeyRegister::isValidKey()) {
+			for (KeyListener* kl : keyListeners)
+				kl->type(KeyRegister::getRecentKey());
+		}
+		break;
 	}
 }
 

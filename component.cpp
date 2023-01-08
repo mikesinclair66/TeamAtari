@@ -7,6 +7,7 @@ void Component::updateColor() {
 }
 
 void Component::draw(RenderWindow& window) {
+	Boundary::draw(window);
 	window.draw(rect);
 }
 
