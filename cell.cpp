@@ -52,7 +52,7 @@ void Cell::draw(RenderWindow& window) {
 		if (tiTimer.getRatio() < 0.5f) {
 			FloatRect bounds = textBox->getLocalBounds();
 			textIndicator.setPosition(Vector2f(getPosition().x + getSize().x / 2
-				+ bounds.width / 2 + 6, getPosition().y));
+				+ bounds.width / 2 + 3, getPosition().y + 3));
 			window.draw(textIndicator);
 		}
 		else if (tiTimer.getRatio() >= 1.f)
@@ -63,12 +63,12 @@ void Cell::draw(RenderWindow& window) {
 void Cell::setSize(float width, float height) {
 	Component::setSize(width, height);
 	textBox->setSize(width, height);
-	textIndicator.setSize(Vector2f(4, height));
+	textIndicator.setSize(Vector2f(4, height - 6));
 }
 
 void Cell::setPosition(float x, float y) {
 	Component::setPosition(x, y);
-	textBox->setPosition(x + getSize().x / 2, y + getSize().y / 2);
+	textBox->setPosition(x + getSize().x / 2, y + getSize().y / 2 + 6);
 }
 
 void Cell::setTextIndicatorColor(Color tiColor) {

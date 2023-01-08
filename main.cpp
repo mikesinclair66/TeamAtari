@@ -1,24 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include "component_window.hpp"
 #include "cell.hpp"
+#include "button.hpp"
 
-using namespace coordinates;
 using namespace interact;
+using namespace coordinates;
 
 int main()
 {
     ComponentWindow w(800, 600, "QDS");
-
-    /*
-    ScrollbarVertical* s = new ScrollbarVertical();
-    s->setRatio(0.3f);
-    s->setOffsetRatio(0.5f);
-    s->setColor(Color::White);
-    s->setScrollColors(Color(127, 127, 127), Color(25, 25, 25));
-    s->updateColor();
-    s->setSize(50, 225);
-    s->setPosition(100, 100);
-    */
 
     Cell* cell = new Cell();
     cell->textBox->setColor(Color::Red);
