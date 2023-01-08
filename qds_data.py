@@ -104,27 +104,30 @@ def shortest_map(data_set, dump):
 def least_gas_mileage(x, user_truck,user_shovel):
 	date_copy  = x.copy()
 	x = x.loc[(x['TRUCK_ID'] == user_truck) & (x['SHOVEL_ID'] == user_shovel)]
+	print(x)
 
 	#check if shovel is open 
 	#check if the dump site is open
 	x  = x.query("STATUS != 'DUMP'")
 	for index, row in x.iterrows():
 
-		if('TRUCK LOADING' not in row['STATUS']):
+		if(x.empty):
 			return ('The load site you requested is closed!')
 			sys.exit('The load site you requested is closed!')
 			break
 	
 	x = x.loc[(x['STATUS'] == 'Hauling') & (x['PAYLOAD']) !=0]
 	date_copy = x
+	print(x)
 	
 	#calculate how much gas was used in time
 	a = x.groupby(['DUMP_ID']).mean()
 	a = a.reset_index()
-	#print(a)
+	print(a)
 	best_miles =  a['FUEL_RATE'].min(axis = 0)
 	a = a.loc[(a['FUEL_RATE'] == best_miles)]
 	print('ok')
+	print(a)
 	b= a['DUMP_ID'].values[0]
 	print(b, 'Dump_ID')
 	
@@ -173,10 +176,13 @@ def main():
 	#calculate_average_gas_shovel_ID(data_set)
 	#predict_fuel(data_set)
 	user_truck = 37
-	user_shovel = 1
+	user_shovel = 5
 	#print(data_set.head())
 
 	message = least_gas_mileage(data_set, user_truck,user_shovel)
 	print(message)
 
 main()
+
+
+print("ur mom")
