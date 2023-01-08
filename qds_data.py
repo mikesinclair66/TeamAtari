@@ -5,14 +5,142 @@ import matplotlib.pyplot as plt
 import seaborn as sb
 from datetime import datetime
 import utm
+import numpy as np
+import sys
+
+
+#
+#try to find distance from 
+#'Empty' 'Queue At LU' 'Spot at LU' 'Truck Loading' 'Queuing at Dump' 'Dumping' 'NON_PRODUCTIVE' 'Wenco General Production' 'Hauling'
+
+#flag 
+def map_UTM(data_set):
+
+	lognitude = []
+	latitude = []
+	index_two = []
+	for index, row in data_set.iterrows():
+
+	
+		if(row['GPSNORTHING'] < 0):
+			#print('y')
+			
+			data_set = data_set.drop(labels = index, axis = 0)
+
+			
+		else:
+			x,y =  utm.to_latlon(row['GPSEASTING'],row['GPSNORTHING'],44,'N')
+		
+			lognitude.append(x)
+			latitude.append(y)
+	
+
+
+	data_set['lognitude'] = lognitude
+	data_set['latitude'] = latitude
+
+	#data_set = data_set.loc[ (data_set['STATUS'] == 'Truck Loading')]
+	#sb.lmplot('lognitude', 'latitude', data=data_set, hue='SHOVEL_ID', fit_reg=False)
+
+
+	sb.scatterplot(data = data_set, x = 'lognitude', y = 'latitude')
+	grid = sb.FacetGrid(data_set, col = "SHOVEL_ID", hue = "SHOVEL_ID", col_wrap=8)
+	grid.map(sb.scatterplot, "lognitude", "latitude")
+
+	grid.add_legend()
+
+	plt.savefig("log_lag_dump.png")
+
+	plt.show()
+
+def shortest_map(data_set, dump):
 
 
 
+	lognitude = []
+	latitude = []
+	index_two = []
+	for index, row in data_set.iterrows():
+
+	
+		if(row['GPSNORTHING'] < 0):
+			#print('y')
+			
+			data_set = data_set.drop(labels = index, axis = 0)
+
+			
+		else:
+			x,y =  utm.to_latlon(row['GPSEASTING'],row['GPSNORTHING'],44,'N')
+		
+			lognitude.append(x)
+			latitude.append(y)
+	
+
+
+	data_set['lognitude'] = lognitude
+	data_set['latitude'] = latitude
+	print(dump)
+
+	data_set = data_set.loc[ (data_set['DUMP_ID'] == dump)]
+	#sb.lmplot('lognitude', 'latitude', data=data_set, hue='SHOVEL_ID', fit_reg=False)
+
+	#sb.scatterplot(data = data_set, x = 'lognitude', y = 'latitude')
+	#grid = sb.FacetGrid(data_set, col = "SHOVEL_ID", hue = "SHOVEL_ID", col_wrap=8)
+	#grid.map(sb.scatterplot, "lognitude", "latitude")
+
+	#grid.add_legend()
+
+	plt.scatter(data_set['lognitude'],data_set['latitude'])
+	plt.plot(data_set['lognitude'],data_set['latitude'])
+
+	plt.savefig("log_lag_dump.png")
+
+	plt.show()
+
+	return plt
+
+	
+
+def least_gas_mileage(x, user_truck,user_shovel):
+	date_copy  = x.copy()
+	x = x.loc[(x['TRUCK_ID'] == user_truck) & (x['SHOVEL_ID'] == user_shovel)]
+
+	#check if shovel is open 
+	#check if the dump site is open
+	x  = x.query("STATUS != 'DUMP'")
+	for index, row in x.iterrows():
+
+		if('TRUCK LOADING' not in row['STATUS']):
+			return ('The load site you requested is closed!')
+			sys.exit('The load site you requested is closed!')
+			break
+	
+	x = x.loc[(x['STATUS'] == 'Hauling') & (x['PAYLOAD']) !=0]
+	date_copy = x
+	
+	#calculate how much gas was used in time
+	a = x.groupby(['DUMP_ID']).mean()
+	a = a.reset_index()
+	#print(a)
+	best_miles =  a['FUEL_RATE'].min(axis = 0)
+	a = a.loc[(a['FUEL_RATE'] == best_miles)]
+	print('ok')
+	b= a['DUMP_ID'].values[0]
+	print(b, 'Dump_ID')
+	
+
+	
+	
+
+	shortest_map(date_copy,b)
+
+def import_json(x):
+	print()
 
 #df1 = pd.read_json('data_group1.json', lines = True)
 #df2 = pd.read_json('data_group2.json', lines = True)
 #df3 = pd.read_json('data_group3.json', lines = True)
-#df4 = pd.read_json('data_group4.json', lines = True)
+#df4 = pd.read_json('data_group4.json', lines = True) 
 #df5 = pd.read_json('data_group5.json', lines = True)
 #df6 = pd.read_json('data_group6.json', lines = True)
 #df7 = pd.read_json('data_group7.json', lines = True)
@@ -31,88 +159,24 @@ import utm
 #print(new.head())
 #new.to_csv('mining.csv',index = None)
 
-x = pd.read_csv('mining.csv',sep = ',')
-data_set = x.dropna()
-
-#plt.scatter(x['FUEL_RATE'],x['PAYLOAD'], c = 'black')
-#plt.xlabel('FUEL_RATE')
-#plt.ylabel('PAYLOAD')
-#pltlt.show()
-
-data_set['TIMESTAMP'] = pd.to_datetime(data_set['TIMESTAMP'])
-
-
-#print(x.groupby(['TRUCK_TYPE_ID']).mean())
-
-#print(x['FUEL_RATE'].unique())
-#print(x['STATUS'])
-
-#sb.pairplot(x[['FUEL_RATE','PAYLOAD', 'TRUCK_ID','SHOVEL_ID','DUMP_ID','GPSEASTING']], diag_kind = 'kde')
-#plt.savefig("test_fuel.png")
-#plt.show()
-
-#print(x.describe().transpose())
 
 
 
+def main():
+	#import_json('data_group1.json')
+	pd.set_option('display.max_columns', None)
 
-#print(utm.to_latlon(x['GPSEASTING'],x['GPSNORTHING'],44,'N'))
+	x = pd.read_csv('mining.csv',sep = ',')
+	data_set = x.dropna()
+	data_set['TIMESTAMP'] = pd.to_datetime(data_set['TIMESTAMP'])
+	#map_UTM(data_set)
+	#calculate_average_gas_shovel_ID(data_set)
+	#predict_fuel(data_set)
+	user_truck = 37
+	user_shovel = 1
+	#print(data_set.head())
 
-#
-#try to find distance from 
-#'Empty' 'Queue At LU' 'Spot at LU' 'Truck Loading' 'Queuing at Dump' 'Dumping' 'NON_PRODUCTIVE' 'Wenco General Production' 'Hauling'
+	message = least_gas_mileage(data_set, user_truck,user_shovel)
+	print(message)
 
-#flag 
-def map_UTM():
-
-	lognitude = []
-	latitude = []
-	for index, row in data_set.iterrows():
-
-	
-		if(row['GPSNORTHING'] < 0):
-			print('y')
-			x,y =  utm.to_latlon(row['GPSEASTING'],row['GPSNORTHING'],38,'S')
-		
-			lognitude.append(x)
-			latitude.append(y)
-			#array.append(row['GPSNORTHING'])
-		else:
-			x,y =  utm.to_latlon(row['GPSEASTING'],row['GPSNORTHING'],44,'N')
-		
-			lognitude.append(x)
-			latitude.append(y)
-		
-
-	plt.scatter(lognitude,latitude, c = 'black')
-	plt.xlabel('lognitude')
-	plt.ylabel('latitude')
-	plt.show()
-
-
-
-
-
-map_UTM()
-
-#want countplot payload shovel id 
-
-
-
-
-#df0 = pd.read_csv('mining.csv', sep = ',')
-
-#print(df0.head())
-#print(df0.columns)
-#df.to_csv('dfo.csv')
-
-#print(df0.to_string())
-
-
-#df = pd.DataFrame(df0)
-#print(df.head())
-
-#frames =  [df0]
-
-#dataset = pd.concat(frames, ignore_index = True)
-#print(dataset.head())
+main()
